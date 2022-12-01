@@ -1,0 +1,28 @@
+    version: '3'
+    services:
+      # Postgres container
+        postgres:
+            image: postgres
+            environment:
+                - POSTGRES_PASSWORD=postgres_password
+                - POSTGRES-PORT=5432
+                - POSTGRES_USERNAME=postgres
+                - POSTGRES_DB=simple_blog_api
+
+      # api container
+        api:
+            depends_on:
+              - postgres
+            image: kkokila/simple_blog_api
+
+            build: .
+                
+            ports:
+            - '3000:3000'  
+
+            environment:
+                - POSTGRES_HOST=postgres
+                - POSTGRES-PORT=5432
+                - POSTGRES_USERNAME=postgres
+                - POSTGRES_PASSWORD=postgres_password
+                - POSTGRES_DB=simple_blog_api              
